@@ -8,7 +8,7 @@ PY_35 = sys.version_info >= (3, 5)
 if hasattr(asyncio, 'ensure_future'):
     async_task = asyncio.ensure_future
 else:
-    async_task = asyncio.async  # Deprecated since 3.4.4
+    async_task = getattr(asyncio, 'async')  # Deprecated since 3.4.4
 
 # create_future is new in version 3.5.2
 if hasattr(BaseEventLoop, 'create_future'):

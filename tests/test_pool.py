@@ -7,6 +7,7 @@ from aiothrift import (
     ConnectionClosedError,
 )
 
+from aiothrift.utils import async_task
 
 def _assert_defaults(pool):
     assert isinstance(pool, ThriftPool)
@@ -200,8 +201,8 @@ def test_pool_size_growth(test_thrift, create_pool, server, loop):
             assert done == {0, 1}
 
     for _ in range(2):
-        tasks.append(asyncio.async(task1(_), loop=loop))
-    tasks.append(asyncio.async(task2(), loop=loop))
+        tasks.append(async_task(task1(_), loop=loop))
+    tasks.append(async_task(task2(), loop=loop))
     yield from asyncio.gather(*tasks, loop=loop)
 
 
